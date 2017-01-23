@@ -6,7 +6,8 @@ Discover live clients/hosts in an IP range on LAN or WAN.
 2.) Make netseek executable 'chmod +x /usr/bin/netseek'
 
 # Usage
-netseek is used as a common command line tool in bash. Use 'netseek' as the command. Use the first 3 octals of the network address you want to ping scan. Enter a number between 1 and 255 to set the number of clients/hosts to attempt to discover.
+netseek is used as a common command line tool in bash. Use 'netseek' as the command. Use the first 3 octals of the network
+address you want to ping scan. Enter a number between 1 and 255 to set the number of clients/hosts to attempt to discover.
 
 (example@linux:~$ netseek 192.168.1 255)
 This^ example will send a single ICMP echo request to:
@@ -19,7 +20,13 @@ This^ example will send a single ICMP echo request to:
 255.) 192.168.1.255
 
 # Disclaimer
-This tool utilizes the common ping command in a unique way. As it is using ping, this means clients/hosts will be discovered based upon ICMP echo requests. The ping command used will incorporate the smallest byte size available in ping (16 bytes) and will only send a single ping request (to prevent alarming any IDS). Most all devices will respond to ICMP echo requests by default as it is the most common protocol used to see if a client/host is up on the network and is responding to other clients/hosts. Some devices on networks are configured to ignore or not respond to ICMP echo requests above a certain size or altogether. In these cases, netseek may fail to discover a client/host. netseek also ignores any ping responses that have any percentage of packet loss (i.e. 1-99% packet loss). This can be changed within the script if need be.
+This tool utilizes the common ping command in a unique way. As it is using ping, this means clients/hosts will be discovered
+based upon ICMP echo requests. The ping command used will incorporate the smallest byte size available in ping (16 bytes) and
+will only send a single ping request (to prevent alarming any IDS). Most all devices will respond to ICMP echo requests by
+default as it is the most common protocol used to see if a client/host is up on the network and is responding to other
+clients/hosts. Some devices on networks are configured to ignore or not respond to ICMP echo requests above a certain size or
+altogether. In these cases, netseek may fail to discover a client/host. netseek also ignores any ping responses that have any
+percentage of packet loss (i.e. 1-99% packet loss). This can be changed within the script if need be.
 
 This tool is offered to the public in the hopes that it will be useful in some way.
 
