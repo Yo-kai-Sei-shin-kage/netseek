@@ -1,0 +1,58 @@
+#!/bin/bash
+
+## netseek by Yokai Seishinkage ##
+
+## This tool simply prints clients/hosts that are up and active on LAN
+## or on WAN IP blocks. This tool ignores partial packet exchanges
+## (i.e. 1-99% packet loss) and only relies upon ICMP echo requests
+## to test if IPs on the network are up and active. Feel free to modify
+## this code as you see fit/necessary for your needs.
+
+## Check for root permission ##
+while [ "$(whoami)" != "root" ]; do
+   echo "You must be root to use this!"
+   exit 1
+done
+
+mkdir -p /netseeker/tmp
+touch /netseeker/tmp/up.txt
+
+test_addr="$1"
+max_ips="$2"
+
+if [ "$max_ips" -gt "255" ] 2>/dev/null; then
+   echo "Max IPs cannot exceed 255!"
+   exit 1
+elif [ "$max_ips" -lt "1" ] 2>/dev/null; then
+   echo "Max IPs cannot be less than 1!"
+   exit 1
+else
+   if [[ $max_ips =~ ^-?[0-9]+$ ]] 2>/dev/null; then
+      echo
+   else
+      echo "Max IPs cannot be a letter or special character!"
+      exit 1
+   fi
+fi
+
+for i in $(seq 1 $max_ips)
+do
+
+tester() {
+
+local no_reach="$(ping -b -l1 -c1 -i 0.001 $test_addr.$i | grep -o 'Unreachable')"
+local inactive="$(ping -b -l1 -c1 -i 0.001 $test_addr.$i | grep -o '[^ ]*00% packet loss')"
+
+    if [ "$no_reach" == "Unreachable" -o "$inactive" == "100% packet loss" ]; then
+       continue
+    else
+       echo -e "\x1b[92m$test_addr.$i\x1b[0m ~ \x1b[93m<\x1b[0m\x1b[95mup & active\x1b[0m\x1b[93m>\x1b[0m" >> /netseeker/tmp/up.txt
+       head -n $i /netseeker/tmp/up.txt | tail -n1 && sleep 0.0001
+    fi && wait
+}
+
+tester
+done && wait
+
+rm -rf -R /netseeker
+echo -e "\x1b[91mDone!\x1b[0m\n"
