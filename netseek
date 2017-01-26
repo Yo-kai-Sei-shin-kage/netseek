@@ -35,6 +35,12 @@ else
    fi
 fi
 
+echo -e "\x1b[92m
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|  \x1b[91mClient/host - Status\x1b[0m\x1b[92m       |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+\x1b[0m"
+
 for i in $(seq 1 $max_ips)
 do
 
@@ -44,9 +50,9 @@ local no_reach="$(ping -b -l1 -c1 -i 0.001 $test_addr.$i | grep -o 'Unreachable'
 local inactive="$(ping -b -l1 -c1 -i 0.001 $test_addr.$i | grep -o '[^ ]*00% packet loss')"
 
     if [ "$no_reach" == "Unreachable" -o "$inactive" == "100% packet loss" ]; then
-       continue
+       echo >> /dev/null;
     else
-       echo -e "\x1b[92m$test_addr.$i\x1b[0m ~ \x1b[93m<\x1b[0m\x1b[95mup & active\x1b[0m\x1b[93m>\x1b[0m" >> /netseeker/tmp/up.txt
+       echo -e "   \x1b[92m$test_addr.$i\x1b[0m ~ \x1b[93m<\x1b[0m\x1b[95mup & active\x1b[0m\x1b[93m>\x1b[0m" >> /netseeker/tmp/up.txt
        head -n $i /netseeker/tmp/up.txt | tail -n1 && sleep 0.0001
     fi && wait
 }
@@ -55,4 +61,4 @@ tester
 done && wait
 
 rm -rf -R /netseeker
-echo -e "\x1b[91mDone!\x1b[0m\n"
+echo -e "\n\x1b[91mDone!\x1b[0m\n"
