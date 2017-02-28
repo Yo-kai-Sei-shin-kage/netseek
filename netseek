@@ -14,6 +14,13 @@ while [ "$(whoami)" != "root" ]; do
    exit 1
 done
 
+## Delete "/netseeker" directory upon premature exit (ctrl+c).
+finish() {
+   rm -rf -R /netseeker
+}
+
+trap finish EXIT
+
 mkdir -p /netseeker/tmp
 touch /netseeker/tmp/up.txt
 
