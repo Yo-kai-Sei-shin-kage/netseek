@@ -29,15 +29,18 @@ max_ips="$2"
 
 if [ "$max_ips" -gt "255" ] 2>/dev/null; then
    echo "Max IPs cannot exceed 255!"
+   echo "USAGE EXAMPLE: netseek 192.168.1 255"
    exit 1
 elif [ "$max_ips" -lt "1" ] 2>/dev/null; then
    echo "Max IPs cannot be less than 1!"
+   echo "USAGE EXAMPLE: netseek 192.168.1 255"
    exit 1
 else
    if [[ $max_ips =~ ^-?[0-9]+$ ]] 2>/dev/null; then
-      echo
+      echo -n >> /dev/null;
    else
       echo "Max IPs cannot be a letter or special character!"
+      echo "USAGE EXAMPLE: netseek 192.168.1 255"
       exit 1
    fi
 fi
