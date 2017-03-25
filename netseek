@@ -56,8 +56,8 @@ do
 
 tester() {
 
-local no_reach="$(ping -b -l1 -c1 -i 0.001 $test_addr.$i | grep -o 'Unreachable')"
-local inactive="$(ping -b -l1 -c1 -i 0.001 $test_addr.$i | grep -o '[^ ]*00% packet loss')"
+local no_reach="$(ping -s16 -b -l1 -c1 -i 0.001 $test_addr.$i | grep -o 'Unreachable')"
+local inactive="$(ping -s16 -b -l1 -c1 -i 0.001 $test_addr.$i | grep -o '[^ ]*00% packet loss')"
 
     if [ "$no_reach" == "Unreachable" -o "$inactive" == "100% packet loss" ]; then
        echo >> /dev/null;
