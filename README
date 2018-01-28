@@ -2,8 +2,10 @@
 Discover live clients/hosts in an IP range on LAN or WAN.
 
 #Installation
-1.) Save the file 'netseek' to '/usr/bin/' directory.
-2.) Make netseek executable 'chmod +x /usr/bin/netseek'
+1.) git clone https://github.com/yo-kai-sei-shin-kage/netseek.git
+2.) cd netseek
+3.) chmod +x install.sh
+4.) sudo ./install.sh
 
 ## Usage ##
 netseek is used as a common command line tool in bash. Use 'netseek' as the command.
